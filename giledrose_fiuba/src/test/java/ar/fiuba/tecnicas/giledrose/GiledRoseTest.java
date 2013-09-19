@@ -9,45 +9,45 @@ import org.junit.Test;
 public class GiledRoseTest {
 
 	Item vest;
-	int vestSellInInicial  = 10;
-	int vestQualityInicial = 20;
-	int vestQualityAumentoNormal  = -1;
-	int vestQualityAumentoSellIn0 = -2;
+	int vestSellInInitial  = 10;
+	int vestQualityInitial = 20;
+	int vestQualityUpdateNormal      = -1;
+	int vestQualityUpdateWithSellIn0 = -2;
 	
 	Item brie;
-	int brieSellInInicial  = 2;
-	int brieQualityInicial = 0;
-	int brieQualityAumentoNormal  = 1;
-	int brieQualityAumentoSellIn0 = 2;
+	int brieSellInInitial  = 2;
+	int brieQualityInitial = 0;
+	int brieQualityUpdateNormal      = 1;
+	int brieQualityUpdateWithSellIn0 = 2;
 
 	Item elixir;
-	int elixirSellInInicial  = 5;
-	int elixirQualityInicial = 7;
-	int elixirQualityAumentoNormal  = -1;
-	int elixirQualityAumentoSellIn0 = -2;
+	int elixirSellInInitial  = 5;
+	int elixirQualityInitial = 7;
+	int elixirQualityUpdateNormal      = -1;
+	int elixirQualityUpdateWithSellIn0 = -2;
 	
 	Item sulfuras;
-	int sulfurasSellInInicial  =  0;
-	int sulfurasQualityInicial = 80;
+	int sulfurasSellInInitial  =  0;
+	int sulfurasQualityInitial = 80;
 	
 	Item passes;
-	int passesSellInInicial  = 15;
-	int passesQualityInicial = 20;
-	int passesQualityAumentoNormal             = 1;
-	int passesQualityAumentoConSellInMenosDe10 = 2;
-	int passesQualityAumentoConSellInMenosDe5  = 3;
+	int passesSellInInitial  = 15;
+	int passesQualityInitial = 20;
+	int passesQualityUpdateNormal               = 1;
+	int passesQualityUpdateWithSellInLessThan10 = 2;
+	int passesQualityUpdateWithSellInLessThan5  = 3;
 	
 	Item cake;
-	int cakeSellInInicial  = 3;
-	int cakeQualityInicial = 6;
-	int cakeQualityAumentoNormal  = -1;
-	int cakeQualityAumentoSellIn0 = -2;
+	int cakeSellInInitial  = 3;
+	int cakeQualityInitial = 6;
+	int cakeQualityUpdateNormal      = -1;
+	int cakeQualityUpdateWithSellIn0 = -2;
 
 	Item conjured;
-	int conjuredSellInInicial  =  7;
-	int conjuredQualityInicial = 24;
-	int conjuredQualityAumentoNormal  = -2;
-	int conjuredQualityAumentoSellIn0 = -3;
+	int conjuredSellInInitial  =  7;
+	int conjuredQualityInitial = 24;
+	int conjuredQualityUpdateNormal      = -2;
+	int conjuredQualityUpdateWithSellIn0 = -3;
 	
 	Item[] items;
 	Inventory inventory;
@@ -55,13 +55,13 @@ public class GiledRoseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		vest     = new Item("+5 Dexterity Vest", vestSellInInicial, vestQualityInicial);
-		brie     = new Item("Aged Brie", brieSellInInicial, brieQualityInicial);
-		elixir   = new Item("Elixir of the Mongoose", elixirSellInInicial, elixirQualityInicial);
-		sulfuras = new Item("Sulfuras, Hand of Ragnaros", sulfurasSellInInicial, sulfurasQualityInicial);
-		passes   = new Item("Backstage passes to a TAFKAL80ETC concert", passesSellInInicial, passesQualityInicial);
-		cake     = new Item("Conjured Mana Cake", cakeSellInInicial, cakeQualityInicial);
-		conjured = new Item("Conjured", conjuredSellInInicial, conjuredQualityInicial);
+		vest     = new Item("+5 Dexterity Vest", vestSellInInitial, vestQualityInitial);
+		brie     = new Item("Aged Brie", brieSellInInitial, brieQualityInitial);
+		elixir   = new Item("Elixir of the Mongoose", elixirSellInInitial, elixirQualityInitial);
+		sulfuras = new Item("Sulfuras, Hand of Ragnaros", sulfurasSellInInitial, sulfurasQualityInitial);
+		passes   = new Item("Backstage passes to a TAFKAL80ETC concert", passesSellInInitial, passesQualityInitial);
+		cake     = new Item("Conjured Mana Cake", cakeSellInInitial, cakeQualityInitial);
+		conjured = new Item("Conjured", conjuredSellInInitial, conjuredQualityInitial);
 
 		items = new Item[] {
 			vest,
@@ -83,7 +83,7 @@ public class GiledRoseTest {
 
 
 	@Test
-	public void testCalidadNoNegativoInicial() {
+	public void testInitialQualityNotNegative() {
 		assertEquals(vest.getQuality() < 0, false);
 		assertEquals(brie.getQuality() < 0, false);
 		assertEquals(elixir.getQuality() < 0, false);
@@ -95,7 +95,7 @@ public class GiledRoseTest {
 	
 	
 	@Test
-	public void testCalidadNoNegativoTrasUnUpdate() {
+	public void testQualityNotNegativeAfterUpdate() {
 		inventory.updateQuality();
 
 		assertEquals(vest.getQuality() < 0, false);
@@ -109,7 +109,7 @@ public class GiledRoseTest {
 	
 	
 	@Test
-	public void testCalidadNoNegativoTrasVariosUpdates() {
+	public void testQualityNotNegativeAfterSomeUpdates() {
 		inventory.updateQuality();
 		inventory.updateQuality();
 		inventory.updateQuality();
@@ -125,41 +125,9 @@ public class GiledRoseTest {
 		assertEquals(conjured.getQuality() < 0, false);
 	}
 
-	
+
 	@Test
-	public void testSulfurasCalidadConstante() {
-		assertEquals(sulfuras.getQuality() == sulfurasQualityInicial, true);
-	
-		inventory.updateQuality();
-
-		assertEquals(sulfuras.getQuality() == sulfurasQualityInicial, true);
-	
-		inventory.updateQuality();
-		inventory.updateQuality();
-		inventory.updateQuality();
-
-		assertEquals(sulfuras.getQuality() == sulfurasQualityInicial, true);
-	}
-	
-	
-	@Test
-	public void testSulfurasVencimientoConstante() {
-		assertEquals(sulfuras.getSellIn() == sulfurasSellInInicial, true);
-	
-		inventory.updateQuality();
-
-		assertEquals(sulfuras.getSellIn() == sulfurasSellInInicial, true);
-	
-		inventory.updateQuality();
-		inventory.updateQuality();
-		inventory.updateQuality();
-
-		assertEquals(sulfuras.getSellIn() == sulfurasSellInInicial, true);
-	}
-	
-	
-	@Test
-	public void testCalidadNoMayor50Inicial() {
+	public void testInitialQualityNotGreaterThan50() {
 		assertEquals(vest.getQuality()     >  50, false);
 		assertEquals(brie.getQuality()     >  50, false);
 		assertEquals(elixir.getQuality()   >  50, false);
@@ -171,7 +139,7 @@ public class GiledRoseTest {
 	
 	
 	@Test
-	public void testCalidadNoMayor50TrasUnUpdate() {
+	public void testQualityNotGreaterThan50AfterUpdate() {
 		inventory.updateQuality();
 		
 		assertEquals(vest.getQuality()     >  50, false);
@@ -185,7 +153,7 @@ public class GiledRoseTest {
 
 	
 	@Test
-	public void testCalidadNoMayor50TrasVariosUpdates() {
+	public void testQualityNotGreaterThan50AfterSomeUpdates() {
 		inventory.updateQuality();
 		inventory.updateQuality();
 		inventory.updateQuality();
@@ -201,204 +169,236 @@ public class GiledRoseTest {
 		assertEquals(conjured.getQuality() >  50, false);
 	}
 
+
+	@Test
+	public void testSulfurasConstantQuality() {
+		assertEquals(sulfuras.getQuality() == sulfurasQualityInitial, true);
+	
+		inventory.updateQuality();
+
+		assertEquals(sulfuras.getQuality() == sulfurasQualityInitial, true);
+	
+		inventory.updateQuality();
+		inventory.updateQuality();
+		inventory.updateQuality();
+
+		assertEquals(sulfuras.getQuality() == sulfurasQualityInitial, true);
+	}
+	
 	
 	@Test
-	public void testPassesCalidadAumentaCuandoDisminuyeSellIn() {
-		int veces = passesSellInInicial - 10;
-		for (int i = 0; i < veces; i++) {
+	public void testSulfurasConstantSellIn() {
+		assertEquals(sulfuras.getSellIn() == sulfurasSellInInitial, true);
+	
+		inventory.updateQuality();
+
+		assertEquals(sulfuras.getSellIn() == sulfurasSellInInitial, true);
+	
+		inventory.updateQuality();
+		inventory.updateQuality();
+		inventory.updateQuality();
+
+		assertEquals(sulfuras.getSellIn() == sulfurasSellInInitial, true);
+	}
+
+
+	@Test
+	public void testPassesQualityUpWhenSellInDown() {
+		int times = passesSellInInitial - 10;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(passes.getSellIn() , passesSellInInicial - veces);
-		assertEquals(passes.getQuality() , passesQualityInicial + passesQualityAumentoNormal * veces);
+		assertEquals(passes.getSellIn() , passesSellInInitial - times);
+		assertEquals(passes.getQuality() , passesQualityInitial + passesQualityUpdateNormal * times);
 	}
 	
 	
 	@Test
-	public void testPassesCalidadAumentaCuandoDisminuyeSellInMenorA10() {
-		int veces = passesSellInInicial - 10;
-		for (int i = 0; i < veces; i++) {
+	public void testPassesQualityUpWhenSellInDownLessThan10() {
+		int times = passesSellInInitial - 10;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		int passesSellInActual = passesSellInInicial - veces;
-		int passesQualityAumento1 = passesQualityInicial + passesQualityAumentoNormal * veces;
+		int passesSellInActual = passesSellInInitial - times;
+		int passesQualityAfterFirstUpdate = passesQualityInitial + passesQualityUpdateNormal * times;
 		assertEquals(passes.getSellIn()  , passesSellInActual);
-		assertEquals(passes.getQuality() , passesQualityAumento1);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 		
-		veces = veces - 5;
-		for (int i = 0; i < veces; i++) {
+		times = times - 5;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(passes.getSellIn() , passesSellInActual - veces);
-		assertEquals(passes.getQuality() , passesQualityAumento1 + passesQualityAumentoConSellInMenosDe10 * veces);
+		assertEquals(passes.getSellIn() , passesSellInActual - times);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate + passesQualityUpdateWithSellInLessThan10 * times);
 	}
 	
 	
 	@Test
-	public void testPassesCalidadAumentaCuandoDisminuyeSellInMenorA5() {
-		int veces = passesSellInInicial - 10;
-		for (int i = 0; i < veces; i++) {
+	public void testPassesQualityUpWhenSellInDownLessThan5() {
+		int times = passesSellInInitial - 10;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 
-		int passesSellInActual = passesSellInInicial - veces;
-		int passesQualityAumento1 = passesQualityInicial + passesQualityAumentoNormal * veces;
+		int passesSellInActual = passesSellInInitial - times;
+		int passesQualityAfterFirstUpdate = passesQualityInitial + passesQualityUpdateNormal * times;
 		assertEquals(passes.getSellIn()  , passesSellInActual);
-		assertEquals(passes.getQuality() , passesQualityAumento1);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 
-		veces = veces - 5;
-		for (int i = 0; i < veces; i++) {
+		times = times - 5;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		passesSellInActual = passesSellInActual - veces;
-		passesQualityAumento1 = passesQualityAumento1 + passesQualityAumentoConSellInMenosDe10 * veces;
+		passesSellInActual = passesSellInActual - times;
+		passesQualityAfterFirstUpdate = passesQualityAfterFirstUpdate + passesQualityUpdateWithSellInLessThan10 * times;
 		assertEquals(passes.getSellIn() , passesSellInActual);
-		assertEquals(passes.getQuality() , passesQualityAumento1);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 
-		veces = 5;
-		for (int i = 0; i < veces; i++) {
+		times = 5;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(passes.getSellIn() , passesSellInActual - veces);
-		assertEquals(passes.getQuality() , passesQualityAumento1 + passesQualityAumentoConSellInMenosDe10 /* aca */ * veces);
+		assertEquals(passes.getSellIn() , passesSellInActual - times);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate + passesQualityUpdateWithSellInLessThan10 /* aca */ * times);
 	}
 	
 	
 	@Test
-	public void testPassesCalidad0CuandoSellIn0() {
-		int masUnaVez = 1;
-		int veces = passesSellInInicial + masUnaVez;
-		for (int i = 0; i < veces; i++) {
+	public void testPassesQuality0WhenSellIn0() {
+		int oneMoreTime = 1;
+		int times = passesSellInInitial + oneMoreTime;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(passes.getSellIn() , -masUnaVez);
+		assertEquals(passes.getSellIn() , -oneMoreTime);
 		assertEquals(passes.getQuality() , 0);
 	}
 
 
 	@Test
-	public void testBrieCalidadAumentaCuandoDisminuyeSellIn() {
-		assertEquals(brie.getQuality() == brieQualityInicial, true);
+	public void testBrieQualityUpWhenSellInDown() {
+		assertEquals(brie.getQuality() == brieQualityInitial, true);
 	
 		inventory.updateQuality();
 
-		assertEquals(brie.getQuality() > brieQualityInicial, true);
+		assertEquals(brie.getQuality() > brieQualityInitial, true);
 	
 		inventory.updateQuality();
 		inventory.updateQuality();
 		inventory.updateQuality();
 
-		assertEquals(brie.getQuality() > brieQualityInicial, true);
+		assertEquals(brie.getQuality() > brieQualityInitial, true);
 	}
 
 
 	@Test
-	public void testBrieCalidadDisminuyeCuandoSellIn0() {
-		int vecesExtras = 5;
-		int veces = brieSellInInicial + vecesExtras;
-		for (int i = 0; i < veces; i++) {
+	public void testBrieQualityDownWhenSellInDown() {
+		int extraTimes = 5;
+		int times = brieSellInInitial + extraTimes;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(brie.getSellIn()  , brieSellInInicial - veces);
-		assertEquals(brie.getQuality() , brieQualityInicial + brieQualityAumentoNormal * brieSellInInicial + brieQualityAumentoSellIn0 * vecesExtras);
+		assertEquals(brie.getSellIn()  , brieSellInInitial - times);
+		assertEquals(brie.getQuality() , brieQualityInitial + brieQualityUpdateNormal * brieSellInInitial + brieQualityUpdateWithSellIn0 * extraTimes);
 	}
 
 
 	@Test
-	public void testVestCalidadDisminuyeCuandoDisminuyeSellIn() {
-		assertEquals(vest.getQuality() == vestQualityInicial, true);
+	public void testVestQualityDownWhenSellInDown() {
+		assertEquals(vest.getQuality() == vestQualityInitial, true);
 	
 		inventory.updateQuality();
 
-		assertEquals(vest.getQuality() < vestQualityInicial, true);
+		assertEquals(vest.getQuality() < vestQualityInitial, true);
 	}
 
 
 	@Test
-	public void testVestCalidadDisminuyeCuandoSellIn0() {
-		int vecesExtras = 3;
-		int veces = vestSellInInicial + vecesExtras;
-		for (int i = 0; i < veces; i++) {
+	public void testVestQualityDownWhenSellIn0() {
+		int extraTimes = 3;
+		int times = vestSellInInitial + extraTimes;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(vest.getSellIn()  , vestSellInInicial - veces);
-		assertEquals(vest.getQuality() , vestQualityInicial + vestQualityAumentoNormal * vestSellInInicial + vestQualityAumentoSellIn0 * vecesExtras);
+		assertEquals(vest.getSellIn()  , vestSellInInitial - times);
+		assertEquals(vest.getQuality() , vestQualityInitial + vestQualityUpdateNormal * vestSellInInitial + vestQualityUpdateWithSellIn0 * extraTimes);
 	}
 
 
 	@Test
-	public void testElixirCalidadDisminuyeCuandoDisminuyeSellIn() {
-		assertEquals(elixir.getQuality() == elixirQualityInicial, true);
+	public void testElixirQualityDownWhenSellInDown() {
+		assertEquals(elixir.getQuality() == elixirQualityInitial, true);
 	
 		inventory.updateQuality();
 
-		assertEquals(elixir.getQuality() < elixirQualityInicial, true);
+		assertEquals(elixir.getQuality() < elixirQualityInitial, true);
 	}
 
 	
 	@Test
-	public void testElixirCalidadDisminuyeCuandoSellIn0() {
-		int vecesExtras = 5;
-		int veces = elixirSellInInicial + vecesExtras;
-		for (int i = 0; i < veces; i++) {
+	public void testElixirQualityDownWhenSellIn0() {
+		int extraTimes = 5;
+		int times = elixirSellInInitial + extraTimes;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(elixir.getSellIn()  , elixirSellInInicial - veces);
-		assertEquals(elixir.getQuality() , 0 /*elixirQualityInicial + elixirQualityAumentoNormal*elixirSellInInicial + elixirQualityAumentoSellIn0*vecesExtras*/);
+		assertEquals(elixir.getSellIn()  , elixirSellInInitial - times);
+		assertEquals(elixir.getQuality() , 0 /*elixirQualityInitial + elixirQualityUpdateNormal*elixirSellInInitial + elixirQualityUpdateWithSellIn0*extraTimes*/);
 	}
 
 
 	@Test
-	public void testCakeCalidadDisminuyeCuandoDisminuyeSellIn() {
-		assertEquals(cake.getQuality() == cakeQualityInicial, true);
+	public void testCakeQualityDownWhenSellInDown() {
+		assertEquals(cake.getQuality() == cakeQualityInitial, true);
 	
 		inventory.updateQuality();
 
-		assertEquals(cake.getQuality() < cakeQualityInicial, true);
+		assertEquals(cake.getQuality() < cakeQualityInitial, true);
 	}
 
 
 	@Test
-	public void testCakeCalidadDisminuyeCuandoSellIn0() {
-		int vecesExtras = 7;
-		int veces = cakeSellInInicial + vecesExtras;
-		for (int i = 0; i < veces; i++) {
+	public void testCakeQualityDownWhenSellIn0() {
+		int extraTimes = 7;
+		int times = cakeSellInInitial + extraTimes;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(cake.getSellIn()  , cakeSellInInicial - veces);
-		assertEquals(cake.getQuality() , 0 /*cakeQualityInicial + cakeQualityAumentoNormal * cakeSellInInicial + cakeQualityAumentoSellIn0 * vecesExtras*/);
+		assertEquals(cake.getSellIn()  , cakeSellInInitial - times);
+		assertEquals(cake.getQuality() , 0 /*cakeQualityInitial + cakeQualityUpdateNormal * cakeSellInInitial + cakeQualityUpdateWithSellIn0 * extraTimes*/);
 	}
 	
 
 	@Test
-	public void testConjuredCalidadDisminuyeCuandoDisminuyeSellIn() {
-		assertEquals(conjured.getQuality() , conjuredQualityInicial);
+	public void testConjuredQualityDownWhenSellInDown() {
+		assertEquals(conjured.getQuality() , conjuredQualityInitial);
 	
 		inventory.updateQuality();
 
-		assertEquals(conjured.getQuality() , conjuredQualityInicial + conjuredQualityAumentoNormal);
+		assertEquals(conjured.getQuality() , conjuredQualityInitial + conjuredQualityUpdateNormal);
 	}
 
 
 	@Test
-	public void testConjuredCalidadDisminuyeCuandoSellIn0() {
-		int vecesExtras = 9;
-		int veces = conjuredSellInInicial + vecesExtras;
-		for (int i = 0; i < veces; i++) {
+	public void testConjuredQualityDownWhenSellIn0() {
+		int extraTimes = 9;
+		int times = conjuredSellInInitial + extraTimes;
+		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
-		assertEquals(conjured.getSellIn()  , conjuredSellInInicial - veces);
-		assertEquals(conjured.getQuality() , -1 /*conjuredQualityInicial + conjuredQualityAumentoNormal * conjuredSellInInicial + conjuredQualityAumentoSellIn0 * vecesExtras*/);
+		assertEquals(conjured.getSellIn()  , conjuredSellInInitial - times);
+		assertEquals(conjured.getQuality() , -1 /*conjuredQualityInitial + conjuredQualityUpdateNormal * conjuredSellInInitial + conjuredQualityUpdateWithSellIn0 * extraTimes*/);
 	}
 
 
