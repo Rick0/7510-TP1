@@ -1,4 +1,10 @@
+/giledrose_fiuba/target
+/giledrose_fiuba/.classpath
+/giledrose_fiuba/.project
+
+
 *.class
+
 
 # Package Files #
 *.jar
