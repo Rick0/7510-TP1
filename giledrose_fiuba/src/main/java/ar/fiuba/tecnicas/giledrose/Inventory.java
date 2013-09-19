@@ -13,12 +13,13 @@ public class Inventory {
     public Inventory() {
         super();
         items = new InventoryItem[]{
-                new InventoryItem( new Item("+5 Dexterity Vest", 10, 20) ),
-                new InventoryItem( new Item("Aged Brie", 2, 0) ),
-                new InventoryItem( new Item("Elixir of the Mongoose", 5, 7) ),
-                new InventoryItem( new Item("Sulfuras, Hand of Ragnaros", 0, 80) ),
-                new InventoryItem( new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20) ),
-                new InventoryItem( new Item("Conjured Mana Cake", 3, 6) )
+                new InventoryItemNormal( new Item("+5 Dexterity Vest", 10, 20) ),
+                new InventoryItemQualityUp( new Item("Aged Brie", 2, 0) ),
+                new InventoryItemNormal( new Item("Elixir of the Mongoose", 5, 7) ),
+                new InventoryItemLegendary( new Item("Sulfuras, Hand of Ragnaros", 0, 80) ),
+                new InventoryItemQualityMultipleUp( new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20) ),
+                new InventoryItemNormal( new Item("Conjured Mana Cake", 3, 6) ),
+				new InventoryItemDoubleDown( new Item("Conjured", 7, 24) )
         };
     }
 

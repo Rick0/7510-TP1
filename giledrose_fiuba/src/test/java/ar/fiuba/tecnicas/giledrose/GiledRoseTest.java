@@ -17,8 +17,7 @@ public class GiledRoseTest {
 	Item brie;
 	int brieSellInInitial  = 2;
 	int brieQualityInitial = 0;
-	int brieQualityUpdateNormal      = 1;
-	int brieQualityUpdateWithSellIn0 = 2;
+	int brieQualityUpdateNormal = 1;
 
 	Item elixir;
 	int elixirSellInInitial  = 5;
@@ -64,13 +63,13 @@ public class GiledRoseTest {
 		conjured = new Item("Conjured", conjuredSellInInitial, conjuredQualityInitial);
 
 		items = new InventoryItem[] {
-			new InventoryItem( vest ),
-			new InventoryItem( brie ),
-			new InventoryItem( elixir ),
-			new InventoryItem( sulfuras ),
-			new InventoryItem( passes ),
-			new InventoryItem( cake ),
-			new InventoryItem( conjured )
+			new InventoryItemNormal( vest ),
+			new InventoryItemQualityUp( brie ),
+			new InventoryItemNormal( elixir ),
+			new InventoryItemLegendary( sulfuras ),
+			new InventoryItemQualityMultipleUp( passes ),
+			new InventoryItemNormal( cake ),
+			new InventoryItemDoubleDown( conjured )
 		};
 
 		inventory = new Inventory( items );
@@ -204,7 +203,7 @@ public class GiledRoseTest {
 
 	@Test
 	public void testPassesQualityUpWhenSellInDown() {
-		int times = passesSellInInitial - 10;
+		int times = 2;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
@@ -216,7 +215,7 @@ public class GiledRoseTest {
 	
 	@Test
 	public void testPassesQualityUpWhenSellInDownLessThan10() {
-		int times = passesSellInInitial - 10;
+		int times = passesSellInInitial - 11;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
@@ -226,7 +225,7 @@ public class GiledRoseTest {
 		assertEquals(passes.getSellIn()  , passesSellInActual);
 		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 		
-		times = times - 5;
+		times = 4;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
@@ -238,7 +237,7 @@ public class GiledRoseTest {
 	
 	@Test
 	public void testPassesQualityUpWhenSellInDownLessThan5() {
-		int times = passesSellInInitial - 10;
+		int times = passesSellInInitial - 11;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
@@ -248,7 +247,7 @@ public class GiledRoseTest {
 		assertEquals(passes.getSellIn()  , passesSellInActual);
 		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 
-		times = times - 5;
+		times = 5;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
@@ -258,13 +257,13 @@ public class GiledRoseTest {
 		assertEquals(passes.getSellIn() , passesSellInActual);
 		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate);
 
-		times = 5;
+		times = 2;
 		for (int i = 0; i < times; i++) {
 			inventory.updateQuality();
 		}
 		
 		assertEquals(passes.getSellIn() , passesSellInActual - times);
-		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate + passesQualityUpdateWithSellInLessThan10 /* aca */ * times);
+		assertEquals(passes.getQuality() , passesQualityAfterFirstUpdate + passesQualityUpdateWithSellInLessThan5  * times);
 	}
 	
 	
@@ -306,7 +305,7 @@ public class GiledRoseTest {
 		}
 		
 		assertEquals(brie.getSellIn()  , brieSellInInitial - times);
-		assertEquals(brie.getQuality() , brieQualityInitial + brieQualityUpdateNormal * brieSellInInitial + brieQualityUpdateWithSellIn0 * extraTimes);
+		assertEquals(brie.getQuality() , brieQualityInitial + brieQualityUpdateNormal * times);
 	}
 
 
@@ -329,7 +328,7 @@ public class GiledRoseTest {
 		}
 		
 		assertEquals(vest.getSellIn()  , vestSellInInitial - times);
-		assertEquals(vest.getQuality() , vestQualityInitial + vestQualityUpdateNormal * vestSellInInitial + vestQualityUpdateWithSellIn0 * extraTimes);
+		assertEquals(vest.getQuality() , vestQualityInitial + vestQualityUpdateNormal * (vestSellInInitial+1) + vestQualityUpdateWithSellIn0 * extraTimes);
 	}
 
 
@@ -352,7 +351,7 @@ public class GiledRoseTest {
 		}
 		
 		assertEquals(elixir.getSellIn()  , elixirSellInInitial - times);
-		assertEquals(elixir.getQuality() , 0 /*elixirQualityInitial + elixirQualityUpdateNormal*elixirSellInInitial + elixirQualityUpdateWithSellIn0*extraTimes*/);
+		assertEquals(elixir.getQuality() , 0);
 	}
 
 
@@ -398,7 +397,7 @@ public class GiledRoseTest {
 		}
 		
 		assertEquals(conjured.getSellIn()  , conjuredSellInInitial - times);
-		assertEquals(conjured.getQuality() , -1 /*conjuredQualityInitial + conjuredQualityUpdateNormal * conjuredSellInInitial + conjuredQualityUpdateWithSellIn0 * extraTimes*/);
+		assertEquals(conjured.getQuality() , 0);
 	}
 
 
