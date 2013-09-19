@@ -34,10 +34,10 @@ public class Inventory {
 
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
-            if (items[i].getName() != "Aged Brie" && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
-                if (items[i].getQuality() > bottomQuality) {
-                    if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
-						if (items[i].getName() == "Conjured") {
+            if ( !isAgedBrie(i)  &&  !isBackstagePasses(i) ) {
+                if ( isItemQualityAboveBottom(i) ) {
+                    if ( !isSulfuras(i) ) {
+						if ( isConjured(i) ) {
 							items[i].setQuality(items[i].getQuality() + qualityDoubleDown);
 						}
 						else {
@@ -46,18 +46,18 @@ public class Inventory {
                     }
                 }
             } else {
-                if (items[i].getQuality() < topQuality) {
+                if ( isItemQualityLessTop(i) ) {
                     items[i].setQuality(items[i].getQuality() + qualityNormalUp);
 
-                    if (items[i].getName() == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].getSellIn() < midSellIn) {
-                            if (items[i].getQuality() < topQuality) {
+                    if ( isBackstagePasses(i) ) {
+                        if ( isItemSellInLessMidValue(i) ) {
+                            if ( isItemQualityLessTop(i) ) {
                                 items[i].setQuality(items[i].getQuality() + qualityNormalUp);
                             }
                         }
 
-                        if (items[i].getSellIn() < lowSellIn) {
-                            if (items[i].getQuality() < topQuality) {
+                        if ( isItemSellInLessLowValue(i) ) {
+                            if ( isItemQualityLessTop(i) ) {
                                 items[i].setQuality(items[i].getQuality() + qualityNormalUp);
                             }
                         }
@@ -65,15 +65,15 @@ public class Inventory {
                 }
             }
 
-            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
+            if ( !isSulfuras(i) ) {
                 items[i].setSellIn(items[i].getSellIn() + sellInNormalDown);
             }
 
-            if (items[i].getSellIn() < bottomSellIn) {
-                if (items[i].getName() != "Aged Brie") {
-                    if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].getQuality() > bottomQuality) {
-                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
+            if ( isItemSellInLessBottomValue(i) ) {
+                if ( !isAgedBrie(i) ) {
+                    if ( !isBackstagePasses(i) ) {
+                        if ( isItemQualityAboveBottom(i) ) {
+                            if ( !isSulfuras(i) ) {
                                 items[i].setQuality(items[i].getQuality() + qualityNormalDown);
                             }
                         }
@@ -81,12 +81,58 @@ public class Inventory {
                         items[i].setQuality(items[i].getQuality() - items[i].getQuality());
                     }
                 } else {
-                    if (items[i].getQuality() < topQuality) {
+                    if ( isItemQualityLessTop(i) ) {
                         items[i].setQuality(items[i].getQuality() + qualityNormalUp);
                     }
                 }
             }
         }
     }
+
+
+
+	private boolean isAgedBrie(int i) {
+		return items[i].getName() == "Aged Brie";
+	}
+
+	
+	private boolean isBackstagePasses(int i) {
+		return items[i].getName() == "Backstage passes to a TAFKAL80ETC concert";
+	}
+	
+	
+	private boolean isSulfuras(int i) {
+		return items[i].getName() == "Sulfuras, Hand of Ragnaros";
+	}
+	
+	
+	private boolean isConjured(int i) {
+		return items[i].getName() == "Conjured";
+	}
+
+
+	private boolean isItemQualityAboveBottom(int i) {
+		return items[i].getQuality() > bottomQuality;
+	}
+	
+	
+	private boolean isItemQualityLessTop(int i) {
+		return items[i].getQuality() < topQuality;
+	}
+	
+	
+	private boolean isItemSellInLessMidValue(int i) {
+		return items[i].getSellIn() < midSellIn;
+	}
+	
+	
+	private boolean isItemSellInLessLowValue(int i) {
+		return items[i].getSellIn() < lowSellIn;
+	}
+	
+	
+	private boolean isItemSellInLessBottomValue(int i) {
+		return items[i].getSellIn() < bottomSellIn;
+	}
 
 }
