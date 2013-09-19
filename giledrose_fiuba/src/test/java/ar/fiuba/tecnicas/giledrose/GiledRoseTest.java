@@ -49,7 +49,7 @@ public class GiledRoseTest {
 	int conjuredQualityUpdateNormal      = -2;
 	int conjuredQualityUpdateWithSellIn0 = -3;
 	
-	Item[] items;
+	InventoryItem[] items;
 	Inventory inventory;
 
 
@@ -63,14 +63,14 @@ public class GiledRoseTest {
 		cake     = new Item("Conjured Mana Cake", cakeSellInInitial, cakeQualityInitial);
 		conjured = new Item("Conjured", conjuredSellInInitial, conjuredQualityInitial);
 
-		items = new Item[] {
-			vest,
-			brie,
-			elixir,
-			sulfuras,
-			passes,
-			cake,
-			conjured
+		items = new InventoryItem[] {
+			new InventoryItem( vest ),
+			new InventoryItem( brie ),
+			new InventoryItem( elixir ),
+			new InventoryItem( sulfuras ),
+			new InventoryItem( passes ),
+			new InventoryItem( cake ),
+			new InventoryItem( conjured )
 		};
 
 		inventory = new Inventory( items );
